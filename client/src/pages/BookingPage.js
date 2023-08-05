@@ -37,7 +37,7 @@ const BookingPage = () => {
   // ============ handle availiblity
   const handleAvailability = async () => {
     try {
-      alert("Slot is Available");
+      // alert("Slot is Available");
       dispatch(showLoading());
       const res = await axios.post(
         "/api/v1/user/booking-availbility",

@@ -13,15 +13,14 @@ const Forget = () => {
   //form handler
   const onfinishHandler = async (values) => {
     try {
-      alert("Password Reset Successfull");
+      // alert("Password Reset Successfull");
       dispatch(showLoading());
-      const res = await axios.post("/api/v1/user/login", values);
+      const res = await axios.post("/api/v1/user/forget-password", values);
       window.location.reload();
       dispatch(hideLoading());
       if (res.data.success) {
-        localStorage.setItem("token", res.data.token);
-        message.success("Login Successfully");
-        navigate("/dashboard");
+        message.success("Password Reset Successfully");
+        navigate("/login");
       } else {
         message.error(res.data.message);
       }
@@ -44,8 +43,8 @@ const Forget = () => {
           <Form.Item label="Email" name="email">
             <Input placeholder="Enter your Email" type="email" required />
           </Form.Item>
-          <Form.Item label="Number" name="answer">
-            <Input placeholder="Enter Your Number" type="text" required />
+          <Form.Item label="Number" name="number">
+            <Input placeholder="Enter Your Number" type="number" required />
           </Form.Item>
           <Form.Item label="New Password" name="newpassword">
             <Input

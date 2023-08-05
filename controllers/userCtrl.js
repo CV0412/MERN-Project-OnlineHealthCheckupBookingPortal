@@ -4,6 +4,43 @@ const jwt = require("jsonwebtoken");
 const doctorModel = require("../models/doctorModel");
 const appointmentModel = require("../models/appointmentModel");
 const moment = require("moment");
+
+function validateGmail(email) {
+  // Regular expression pattern to match Gmail address
+  var gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+  // Test if the email matches the Gmail pattern
+  if (gmailRegex.test(email)) {
+    return true; // Valid Gmail address
+  }
+
+  return false; // Invalid Gmail address
+}
+
+function validatePassword(password) {
+  // Regular expression patterns for different password requirements
+  var uppercaseRegex = /[A-Z]/;
+  var lowercaseRegex = /[a-z]/;
+  var numberRegex = /[0-9]/;
+  var symbolRegex = /[!@#$%^&*()]/;
+
+  // Check if the password meets the length requirement
+  if (password.length < 8 || password.length > 15) {
+    return false; // Invalid password length
+  }
+  // Test if the password meets all the requirements
+  if (
+    uppercaseRegex.test(password) &&
+    lowercaseRegex.test(password) &&
+    numberRegex.test(password) &&
+    symbolRegex.test(password)
+  ) {
+    return true; // Valid password
+  }
+
+  return false; // Invalid password
+}
+
 //register callback
 const registerController = async (req, res) => {
   try {
@@ -12,42 +49,6 @@ const registerController = async (req, res) => {
       return res
         .status(200)
         .send({ message: "User Already Exist", success: false });
-    }
-
-    function validateGmail(email) {
-      // Regular expression pattern to match Gmail address
-      var gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-      // Test if the email matches the Gmail pattern
-      if (gmailRegex.test(email)) {
-        return true; // Valid Gmail address
-      }
-
-      return false; // Invalid Gmail address
-    }
-
-    function validatePassword(password) {
-      // Regular expression patterns for different password requirements
-      var uppercaseRegex = /[A-Z]/;
-      var lowercaseRegex = /[a-z]/;
-      var numberRegex = /[0-9]/;
-      var symbolRegex = /[!@#$%^&*()]/;
-
-      // Check if the password meets the length requirement
-      if (password.length < 8 || password.length > 15) {
-        return false; // Invalid password length
-      }
-      // Test if the password meets all the requirements
-      if (
-        uppercaseRegex.test(password) &&
-        lowercaseRegex.test(password) &&
-        numberRegex.test(password) &&
-        symbolRegex.test(password)
-      ) {
-        return true; // Valid password
-      }
-
-      return false; // Invalid password
     }
 
     if (req.body.number.length !== 10) {
@@ -106,6 +107,54 @@ const loginController = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: `Error in Login CTRL ${error.message}` });
+  }
+};
+
+const forgetpasswordController = async (req, res) => {
+  try {
+    const { email, number, newpassword } = req.body;
+
+    if (!email) {
+      return res.status(400).send({ message: "Email is required" });
+    } else if (!newpassword) {
+      return res.status(400).send({ message: "New Password is required" });
+    } else if (!number) {
+      return res.status(400).send({ message: "Number is required" });
+    }
+
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res
+        .status(200)
+        .send({ message: "user not found", success: false });
+    }
+
+    if (number !== user.number) {
+      return res
+        .status(200)
+        .send({ message: "Incorrect Number", success: false });
+    }
+
+    if (validatePassword(newpassword) == false) {
+      return res
+        .status(200)
+        .send({ message: "Enter an valid password", success: false });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newpassword, salt);
+    await userModel.findByIdAndUpdate(user._id, { password: hashedPassword });
+    res.status(200).send({
+      success: true,
+      message: "Password reset successfull",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Forget-password Error",
+      success: false,
+      error,
+    });
   }
 };
 
@@ -330,4 +379,5 @@ module.exports = {
   bookeAppointmnetController,
   bookingAvailabilityController,
   userAppointmentsController,
+  forgetpasswordController,
 };

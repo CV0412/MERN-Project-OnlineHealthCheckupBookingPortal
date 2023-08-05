@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "./../components/Layout";
 import { message, Tabs } from "antd";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ const NotificationPage = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   //   handle read notification
+
   const handleMarkAllRead = async () => {
     try {
       dispatch(showLoading());
@@ -63,6 +64,7 @@ const NotificationPage = () => {
       message.error("Somthing Went Wrong In Ntifications");
     }
   };
+
   return (
     <Layout>
       <h4 className="p-3 text-center">Notification Page</h4>
