@@ -46,7 +46,16 @@ const Register = () => {
               <Input placeholder="Enter Your Email" type="email" required />
             </Form.Item>
             <Form.Item label="Number" name="number">
-              <Input placeholder="Enter Your Number" type="text" required />
+              <Input
+                placeholder="Enter Your Number"
+                type="text"
+                required
+                onChange={(e) => {
+                  if (e.target.value.length > 10) {
+                    message.error("Number Can't exced more then 10 digits");
+                  }
+                }}
+              />
             </Form.Item>
             <Form.Item label="Password" name="password">
               <Input

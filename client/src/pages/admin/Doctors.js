@@ -77,7 +77,7 @@ const Doctors = () => {
               Approve
             </button>
           ) : (
-            <button className="btn btn-danger">Reject</button>
+            <button className="btn btn-primary">Approved</button>
           )}
         </div>
       ),

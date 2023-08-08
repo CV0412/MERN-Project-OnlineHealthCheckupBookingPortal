@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import dayjs from "dayjs";
 import { DatePicker, message, TimePicker } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,7 @@ const BookingPage = () => {
   const [time, setTime] = useState();
   const [isAvailable, setIsAvailable] = useState(false);
   const dispatch = useDispatch();
+
   // login user data
   const getUserData = async () => {
     try {
@@ -37,11 +39,14 @@ const BookingPage = () => {
   // ============ handle availiblity
   const handleAvailability = async () => {
     try {
-      // alert("Slot is Available");
       dispatch(showLoading());
+
+      var t = time.split(":");
+      var a = time.split(" ");
+
       const res = await axios.post(
         "/api/v1/user/booking-availbility",
-        { doctorId: params.doctorId, date, time },
+        { doctorId: params.doctorId, t: t[0], a: a[1] },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -61,6 +66,13 @@ const BookingPage = () => {
       console.log(error);
     }
   };
+
+  // eslint-disable-next-line arrow-body-style
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current < dayjs().startOf("day");
+  };
+
   // =============== booking func
   const handleBooking = async () => {
     try {
@@ -68,6 +80,9 @@ const BookingPage = () => {
       if (!date && !time) {
         return alert("Date & Time Required");
       }
+      var t = time.split(":");
+      var a = time.split(" ");
+
       dispatch(showLoading());
       const res = await axios.post(
         "/api/v1/user/book-appointment",
@@ -78,6 +93,8 @@ const BookingPage = () => {
           userInfo: user,
           date: date,
           time: time,
+          t: t[0],
+          a: a[1],
         },
         {
           headers: {
@@ -88,6 +105,8 @@ const BookingPage = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
+      } else {
+        message.error(res.data.message);
       }
     } catch (error) {
       dispatch(hideLoading());
@@ -121,6 +140,7 @@ const BookingPage = () => {
               <DatePicker
                 aria-required={"true"}
                 className="mt-3"
+                disabledDate={disabledDate}
                 format="DD-MM-YYYY"
                 onChange={(value) => {
                   setDate(moment(value).format("DD-MM-YYYY"));
@@ -128,20 +148,18 @@ const BookingPage = () => {
               />
               <TimePicker
                 aria-required={"true"}
-                format="HH:mm"
+                format="hh:mm a"
                 className="mt-3"
                 onChange={(value) => {
-                  setTime(moment(value).format("HH:mm"));
+                  setTime(moment(value).format("HH:mm a"));
                 }}
-              />
-
+              />{" "}
               <button
                 className="btn btn-primary mt-2"
                 onClick={handleAvailability}
               >
                 Check Availability
               </button>
-
               <button className="btn btn-dark mt-2" onClick={handleBooking}>
                 Book Now
               </button>

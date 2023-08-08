@@ -88,11 +88,18 @@ const registerController = async (req, res) => {
 // login callback
 const loginController = async (req, res) => {
   try {
-    const user = await userModel.findOne({ email: req.body.email });
+    const user = await userModel.findOne({
+      email: req.body.email,
+    });
     if (!user) {
       return res
         .status(200)
         .send({ message: "user not found", success: false });
+    }
+    if (!user.status) {
+      return res
+        .status(200)
+        .send({ message: "User has been Blocked", success: false });
     }
     const isMatch = await bcrypt.compare(req.body.password, user.password);
     if (!isMatch) {
@@ -243,7 +250,6 @@ const getAllNotificationController = async (req, res) => {
 const deleteAllNotificationController = async (req, res) => {
   try {
     const user = await userModel.findOne({ _id: req.body.userId });
-    user.notifcation = [];
     user.seennotification = [];
     const updatedUser = await user.save();
     updatedUser.password = undefined;
@@ -284,22 +290,41 @@ const getAllDocotrsController = async (req, res) => {
 //BOOK APPOINTMENT
 const bookeAppointmnetController = async (req, res) => {
   try {
-    req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
-    req.body.time = moment(req.body.time, "HH:mm").toISOString();
-    req.body.status = "pending";
-    const newAppointment = new appointmentModel(req.body);
-    await newAppointment.save();
-    const user = await userModel.findOne({ _id: req.body.doctorInfo.userId });
-    user.notifcation.push({
-      type: "New-appointment-request",
-      message: `A nEw Appointment Request from ${req.body.userInfo.name}`,
-      onCLickPath: "/user/appointments",
-    });
-    await user.save();
-    res.status(200).send({
-      success: true,
-      message: "Appointment Book succesfully",
-    });
+    const doctordata = await doctorModel.findOne({ _id: req.body.doctorId });
+    var fromtime = doctordata.timings[0].split(":");
+    var ampm = doctordata.timings[0].split(" ");
+    var totime = doctordata.timings[1].split(":");
+
+    if (
+      ampm[1] !== req.body.a ||
+      req.body.t < fromtime[0] ||
+      req.body.t > totime[0]
+    ) {
+      res.status(200).send({
+        data: req.body.doctorInfo,
+        success: false,
+        message: "Appointment is not available",
+      });
+    } else {
+      req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+      req.body.time = moment(req.body.time, "HH:mm a").toISOString();
+      req.body.status = "pending";
+      const doctorInfo = req.body.doctorInfo;
+      const newAppointment = new appointmentModel(req.body);
+      await newAppointment.save();
+      const user = await userModel.findOne({ _id: req.body.doctorInfo.userId });
+      user.notifcation.push({
+        type: "New-appointment-request",
+        message: `A nEw Appointment Request from ${req.body.userInfo.name}`,
+        onCLickPath: "/user/appointments",
+      });
+      await user.save();
+      res.status(200).send({
+        appointments: newAppointment,
+        success: true,
+        message: "Appointment Book succesfully",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -313,36 +338,30 @@ const bookeAppointmnetController = async (req, res) => {
 // booking bookingAvailabilityController
 const bookingAvailabilityController = async (req, res) => {
   try {
-    const date = moment(req.body.date, "DD-MM-YY").toISOString();
-    const fromTime = moment(req.body.time, "HH:mm")
-      .subtract(1, "hours")
-      .toISOString();
-    const toTime = moment(req.body.time, "HH:mm").add(1, "hours").toISOString();
-    const doctorId = req.body.doctorId;
-    const appointments = await appointmentModel.find({
-      doctorId,
-      date,
-      time: {
-        $gte: fromTime,
-        $lte: toTime,
-      },
-    });
-    if (appointments.length > 0) {
-      return res.status(200).send({
-        message: "Appointments not Availibale at this time",
+    const doctordata = await doctorModel.findOne({ _id: req.body.doctorId });
+    var fromtime = doctordata.timings[0].split(":");
+    var ampm = doctordata.timings[0].split(" ");
+    var totime = doctordata.timings[1].split(":");
+
+    if (
+      ampm[1] !== req.body.a ||
+      req.body.t < fromtime[0] ||
+      req.body.t > totime[0]
+    ) {
+      res.status(200).send({
         success: false,
+        message: "Appointment is not available",
       });
     } else {
-      return res.status(200).send({
+      res.status(200).send({
         success: true,
-        message: "Appointments available",
+        message: "Appointment is available",
       });
     }
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      error,
       message: "Error In Booking",
     });
   }

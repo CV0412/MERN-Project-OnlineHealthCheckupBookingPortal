@@ -6,12 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "server": "nodemon serevr.js",
+    "server": "nodemon serevr.js --ignore './client/'",
     "client": "npm start --prefix ./client ",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
-  "author": "techinfyt ",
+  "author": "Varshitha B ",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",

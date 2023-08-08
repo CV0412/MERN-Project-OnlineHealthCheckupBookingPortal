@@ -19,8 +19,8 @@ const Forget = () => {
       window.location.reload();
       dispatch(hideLoading());
       if (res.data.success) {
-        message.success("Password Reset Successfully");
         navigate("/login");
+        message.success(res.data.message);
       } else {
         message.error(res.data.message);
       }
@@ -44,7 +44,16 @@ const Forget = () => {
             <Input placeholder="Enter your Email" type="email" required />
           </Form.Item>
           <Form.Item label="Number" name="number">
-            <Input placeholder="Enter Your Number" type="number" required />
+            <Input
+              placeholder="Enter Your Number"
+              type="text"
+              required
+              onChange={(e) => {
+                if (e.target.value.length > 10) {
+                  message.error("Number Can't exced more then 10 digits");
+                }
+              }}
+            />
           </Form.Item>
           <Form.Item label="New Password" name="newpassword">
             <Input

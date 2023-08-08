@@ -66,8 +66,64 @@ const changeAccountStatusController = async (req, res) => {
   }
 };
 
+//Block user
+const blockuserController = async (req, res) => {
+  try {
+    const user = await userModel.findByIdAndUpdate(req.body.id, {
+      status: false,
+    });
+    if (user) {
+      res.status(200).send({
+        success: true,
+        message: "User has been blocked",
+      });
+    } else {
+      res.status(200).send({
+        success: false,
+        message: "User has not blocked",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in blocking user",
+      error,
+    });
+  }
+};
+
+//Active user
+const activeuserController = async (req, res) => {
+  try {
+    const user = await userModel.findByIdAndUpdate(req.body.id, {
+      status: true,
+    });
+    if (user) {
+      res.status(200).send({
+        success: true,
+        message: "User has been Actived",
+      });
+    } else {
+      res.status(200).send({
+        success: false,
+        message: "User has not Actived",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in activing user",
+      error,
+    });
+  }
+};
+
 module.exports = {
   getAllDoctorsController,
   getAllUsersController,
   changeAccountStatusController,
+  activeuserController,
+  blockuserController,
 };

@@ -11,7 +11,7 @@ const DoctorAppointments = () => {
 
   const getAppointments = async () => {
     try {
-      const res = await axios.get("/api/v1/doctor//doctor-appointments", {
+      const res = await axios.get("/api/v1/doctor/doctor-appointments", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -51,8 +51,19 @@ const DoctorAppointments = () => {
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "_id",
+      title: "User Name",
+      dataIndex: "name",
+      render: (text, record) => <span>{record.userInfo.name}</span>,
+    },
+    {
+      title: "User Email",
+      dataIndex: "email",
+      render: (text, record) => <span>{record.userInfo.email}</span>,
+    },
+    {
+      title: "User Number",
+      dataIndex: "number",
+      render: (text, record) => <span>{record.userInfo.number}</span>,
     },
     {
       title: "Date & Time",
@@ -60,7 +71,7 @@ const DoctorAppointments = () => {
       render: (text, record) => (
         <span>
           {moment(record.date).format("DD-MM-YYYY")} &nbsp;
-          {moment(record.time).format("HH:mm")}
+          {moment(record.time).format("HH:mm a")}
         </span>
       ),
     },
@@ -79,7 +90,7 @@ const DoctorAppointments = () => {
                 className="btn btn-success"
                 onClick={() => handleStatus(record, "approved")}
               >
-                Approved
+                Approve
               </button>
               <button
                 className="btn btn-danger ms-2"

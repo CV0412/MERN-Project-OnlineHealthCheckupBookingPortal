@@ -24,8 +24,8 @@ const Profile = () => {
           ...values,
           userId: user._id,
           timings: [
-            moment(values.timings[0]).format("HH:mm"),
-            moment(values.timings[1]).format("HH:mm"),
+            moment(values.timings[0]).format("HH:mm a"),
+            moment(values.timings[1]).format("HH:mm a"),
           ],
         },
         {
@@ -84,8 +84,8 @@ const Profile = () => {
           initialValues={{
             ...doctor,
             timings: [
-              moment(doctor.timings[0], "HH:mm"),
-              moment(doctor.timings[1], "HH:mm"),
+              moment(doctor.timings[0], "HH:mm a"),
+              moment(doctor.timings[1], "HH:mm a"),
             ],
           }}
         >
@@ -181,7 +181,7 @@ const Profile = () => {
             </Col>
             <Col xs={24} md={24} lg={8}>
               <Form.Item label="Timings" name="timings" required>
-                <TimePicker.RangePicker format="HH:mm" />
+                <TimePicker.RangePicker format="HH:mm a" />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}></Col>

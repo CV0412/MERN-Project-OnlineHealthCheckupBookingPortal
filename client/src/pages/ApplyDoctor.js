@@ -21,8 +21,8 @@ const ApplyDoctor = () => {
           ...values,
           userId: user._id,
           timings: [
-            moment(values.timings[0]).format("HH:mm"),
-            moment(values.timings[1]).format("HH:mm"),
+            moment(values.timings[0]).format("HH:mm a"),
+            moment(values.timings[1]).format("HH:mm a"),
           ],
         },
         {
@@ -140,7 +140,7 @@ const ApplyDoctor = () => {
           </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item label="Timings" name="timings" required>
-              <TimePicker.RangePicker format="HH:mm" />
+              <TimePicker.RangePicker format="HH:mm a" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}></Col>
