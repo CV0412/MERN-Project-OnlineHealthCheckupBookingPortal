@@ -139,7 +139,7 @@ This will create an empty database named onlineFurnitureShop.
 - If using MongoDB Compass, create a new database via the GUI interface.
 
 
-**4. Run the Application**
+**5. Run the Application**
 To run the website:
 - In the terminal, navigate to the root directory of the project.
 - Run the following command to start both the server and the React application concurrently:
