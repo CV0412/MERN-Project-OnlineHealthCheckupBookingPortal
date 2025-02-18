@@ -15,13 +15,61 @@ The **Online Health Checkup Booking Portal** offers a user-friendly and automate
 
 The portal also includes an **Admin Panel** that allows administrators to approve doctor requests and manage the overall system. This ensures only verified healthcare professionals can accept appointments.
 
+## Problem Statement ⚠️
+
+The traditional process of booking health checkup appointments is often time-consuming and inconvenient for both users and healthcare providers. Users face difficulties in finding suitable doctors, booking appointments, and receiving timely notifications. Healthcare providers also struggle with managing appointments and communicating effectively with their patients. These challenges necessitate a more efficient and automated system.
+
+## Existing System 🏚️
+
+Currently, appointment booking for health checkups relies on manual methods such as phone calls or in-person visits. Users must contact healthcare providers, inquire about available time slots, and then schedule appointments manually. This system is prone to errors, delays, and miscommunication, and it lacks automation and real-time availability.
+
+## Limitations of Existing System 🚫
+
+The limitations of the existing system include:
+
+- **Time-consuming process**: Users spend a lot of time finding suitable doctors and booking appointments.
+- **Lack of real-time availability**: Users may not always have access to the most up-to-date availability.
+- **Limited communication**: Miscommunication due to reliance on phone calls and in-person interactions.
+- **Manual approval process**: Healthcare providers must manually approve requests, leading to delays.
+- **Absence of a user-friendly interface**: Existing systems may lack an intuitive, seamless user experience.
+
+## Proposed System 💡
+
+The proposed **Online Health Checkup Booking Portal** addresses these limitations by providing an automated and user-friendly platform. Key features include:
+
+- **Doctor Database**: Users can browse and select doctors based on specialization, availability, and reviews.
+- **Automated Appointment Booking**: Users can book appointments without manual intervention.
+- **Notifications**: Both users and doctors receive timely updates about appointments.
+- **Admin Panel**: Administrators can approve doctor requests and manage the system.
+
+The system provides a streamlined, efficient way to book health checkups and manage appointments.
+
+## Objectives 🎯
+
+The objectives of the **Online Health Checkup Booking Portal** are as follows:
+
+- **Provide a user-friendly platform** for booking health checkup appointments.
+- **Allow users to browse and select doctors** based on specialization, availability, and reviews.
+- **Automate the appointment booking process**, eliminating the need for manual intervention.
+- **Implement a notification system** to keep users and doctors informed about appointment updates.
+- **Enable efficient administrative management**, allowing admins to approve doctor requests and oversee the system.
+
+## Benefits of Proposed System 💥
+
+The **Online Health Checkup Booking Portal** offers several benefits over the existing system, including:
+
+- **Time-saving**: Users can easily find and book appointments with suitable doctors in a streamlined process.
+- **Real-time availability**: Access to up-to-date information about doctor availability for more accurate scheduling.
+- **Improved communication**: Notifications reduce the chances of miscommunication between users and doctors.
+- **Efficient administrative management**: Admins can manage doctor requests and system oversight more effectively.
+- **Enhanced user experience**: The automated processes and user-friendly interface improve the overall experience for both users and doctors.
 
 ## Installation Guide
 
 **Follow these steps** to set up and run the project on your local machine.
 
 **1. Open in VSCode**
-Open Visual Studio Code.
+Open Visual Studio Code and press "Shift + ctrl + `" to open New terminal.
 
 **2. Clone the repository**
 - Clone Github repo project source code 
@@ -58,12 +106,12 @@ cd ..
 
 **4. Run the Application**
 To run the website:
-
-In the terminal, navigate to the root directory of the project.
-
-Run the following command to start both the server and the React application concurrently:
-
+- In the terminal, navigate to the root directory of the project.
+- Run the following command to start both the server and the React application concurrently:
 ```bash
 npm run dev
 ```
 This will start the server and the frontend React app. You can access the website on your default browser at http://localhost:3000.
+
+## To stop the website:
+- In the terminal of VScode press "Ctrl + C".
