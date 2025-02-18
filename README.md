@@ -149,4 +149,4 @@ npm run dev
 This will start the server and the frontend React app. You can access the website on your default browser at http://localhost:3000.
 
 ## To stop the website:
-- In the terminal of VScode press "Ctrl + C".
+- In the terminal of VScode press "Ctrl + C". 
