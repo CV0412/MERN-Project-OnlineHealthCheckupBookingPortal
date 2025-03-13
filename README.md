@@ -72,42 +72,55 @@ The **Online Health Checkup Booking Portal** offers several benefits over the ex
 Open Visual Studio Code and press "Shift + ctrl + `" to open New terminal.
 
 **2. Clone the repository**
-- Clone Github repo project source code 
+
+- Clone Github repo project source code
+
 ```bash
 git clone https://github.com/CV0412/MERN-Project-OnlineHealthCheckupBookingPortal.git
 ```
+
 - Change the directory into cloned project
+
 ```bash
 cd MERN-Project-OnlineHealthCheckupBookingPortal
 ```
 
 **Install the necessary npm packages** for the server-side by running:
+
 - This will download and install all required dependencies listed in the package.json file and create a node_modules folder in the server directory.
+
 ```bash
 npm i
 ```
 
 **Client-side (Frontend)**
+
 - After installing the server-side dependencies, navigate to the client directory by running:
+
 ```bash
 cd client
 ```
 
 - Install the required npm packages in client folder for React by running:
+
 ```bash
 npm i
 ```
+
 This will install the necessary packages for the frontend.
 
 After the installation is complete, go back to the main folder by running:
+
 ```bash
 cd ..
 ```
 
 **3. Setup Environment Variables**
+
 - Edit a .env file in the Main directory with the following variables:
 
 Edit this .env values
+
 ```text
 PORT=8080
 MONGODB_URL=mongodb://127.0.0.1:27017/<DATABASE NAME >
@@ -115,9 +128,11 @@ JWT_SECRET=<JWT TOKEN VALUE>
 ```
 
 **4. Set Up MongoDB**
+
 - Before running the application, ensure you have MongoDB installed and configured on your local system.
 
 ## Install MongoDB on Your System
+
 Download and install MongoDB from the official MongoDB website.
 
 **Follow the installation instructions** for your operating system.
@@ -130,23 +145,47 @@ Once installed, start the MongoDB service:
 
 **Create an Empty Database**
 **Open the MongoDB shell or MongoDB Compass.**
+
 - Create a new database by running the following command in the MongoDB shell:
+
 ```bash
 use <DATABASE NAME >
 ```
+
 This will create an empty database named onlineFurnitureShop.
 
 - If using MongoDB Compass, create a new database via the GUI interface.
 
-
 **5. Run the Application**
 To run the website:
+
 - In the terminal, navigate to the root directory of the project.
 - Run the following command to start both the server and the React application concurrently:
+
 ```bash
 npm run dev
 ```
+
 This will start the server and the frontend React app. You can access the website on your default browser at http://localhost:3000.
 
+## By deafult Admin User,Sample User and Doctor User is created
+
+## Use this login credentials
+
+**Admin User:**
+**Email :** admin@example.com
+**Password :** Admin@123
+
+**Sample User:**
+**Email :** user@example.com
+**Password :** User@123
+
+**Doctor User:**
+**Email :** doctor@example.com
+**Password :** Doctor@123
+
+**Note:** Any user who wants to book an appointment or view available doctors must first register an account and log in. Once logged in, they can view the available doctors on the user dashboard and book an appointment.
+
 ## To stop the website:
-- In the terminal of VScode press "Ctrl + C". 
+
+- In the terminal of VScode press "Ctrl + C".
