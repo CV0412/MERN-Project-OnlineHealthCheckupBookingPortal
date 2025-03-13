@@ -172,17 +172,17 @@ This will start the server and the frontend React app. You can access the websit
 
 ## Use this login credentials
 
-**Admin User:**
-**Email :** admin@example.com
-**Password :** Admin@123
+**Admin User:**<br>
+**Email :** admin@example.com<br>
+**Password :** Admin@123<br>
 
-**Sample User:**
-**Email :** user@example.com
-**Password :** User@123
+**Sample User:**<br>
+**Email :** user@example.com<br>
+**Password :** User@123<br>
 
-**Doctor User:**
-**Email :** doctor@example.com
-**Password :** Doctor@123
+**Doctor User:**<br>
+**Email :** doctor@example.com<br>
+**Password :** Doctor@123<br>
 
 **Note:** Any user who wants to book an appointment or view available doctors must first register an account and log in. Once logged in, they can view the available doctors on the user dashboard and book an appointment.
 
